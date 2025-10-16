@@ -12,6 +12,7 @@ app.get("/", (req, res) => {
   res.send("API is running");
 });
 
+// Mount all API routes under /api
 app.use("/api", routes);
 
 export default app;
