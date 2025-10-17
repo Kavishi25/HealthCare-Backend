@@ -3,8 +3,8 @@ import Doctor from "../models/doctorModel.js";
 // Add new doctor
 export const addDoctor = async (req, res) => {
   try {
-    const { name, specialty, availableSlots } = req.body;
-    const doctor = new Doctor({ name, specialty, availableSlots });
+    const { name, specialty, chargePerSlot, availableSlots } = req.body;
+    const doctor = new Doctor({ name, specialty, chargePerSlot, availableSlots });
     await doctor.save();
     res.status(201).json({ message: "Doctor added successfully", doctor });
   } catch (err) {
@@ -36,10 +36,10 @@ export const getDoctorById = async (req, res) => {
 // Update doctor
 export const updateDoctor = async (req, res) => {
   try {
-    const { name, specialty, availableSlots } = req.body;
+    const { name, specialty, chargePerSlot, availableSlots } = req.body;
     const doctor = await Doctor.findByIdAndUpdate(
       req.params.id,
-      { name, specialty, availableSlots },
+      { name, specialty, chargePerSlot, availableSlots },
       { new: true }
     );
     if (!doctor) return res.status(404).json({ message: "Doctor not found" });

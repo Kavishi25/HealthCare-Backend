@@ -1,5 +1,6 @@
 import Payment from '../models/Payment.js';
 import Card from '../models/Card.js';
+import Appointment from '../models/appointmentModel.js';
 
 /**
  * Payment Controller - Handles all payment-related operations
@@ -18,7 +19,7 @@ class PaymentController {
       const {
         paymentType,
         amount,
-        currency = 'USD',
+        currency = 'LKR',
         appointmentId,
         serviceId,
         cardId,
@@ -73,6 +74,11 @@ class PaymentController {
 
       // Process payment based on type
       const processingResult = await PaymentController.processPayment(payment);
+
+      // Update appointment payment status if appointmentId is provided
+      if (appointmentId) {
+        await PaymentController.updateAppointmentPaymentStatus(appointmentId, payment);
+      }
 
       res.status(201).json({
         success: true,
@@ -503,6 +509,53 @@ class PaymentController {
         status: payment.status,
         message: 'Payment processing failed'
       };
+    }
+  }
+
+  /**
+   * Update appointment payment status based on payment status
+   * @param {String} appointmentId - Appointment ID
+   * @param {Object} payment - Payment object
+   */
+  static async updateAppointmentPaymentStatus(appointmentId, payment) {
+    try {
+      const appointment = await Appointment.findById(appointmentId);
+      
+      if (!appointment) {
+        console.error('Appointment not found:', appointmentId);
+        return;
+      }
+
+      // Map payment status to appointment payment status
+      let paymentStatus = 'unpaid';
+      
+      switch (payment.status) {
+        case 'pending':
+        case 'processing':
+          paymentStatus = 'pending';
+          break;
+        case 'completed':
+          paymentStatus = 'paid';
+          break;
+        case 'failed':
+        case 'cancelled':
+          paymentStatus = 'failed';
+          break;
+        case 'refunded':
+          paymentStatus = 'refunded';
+          break;
+      }
+
+      // Update appointment with payment status and payment reference
+      appointment.paymentStatus = paymentStatus;
+      appointment.paymentId = payment._id;
+      await appointment.save();
+
+      console.log(`✅ Appointment ${appointmentId} payment status updated to: ${paymentStatus}`);
+      
+    } catch (error) {
+      console.error('Error updating appointment payment status:', error);
+      // Don't throw error to avoid breaking payment flow
     }
   }
 }

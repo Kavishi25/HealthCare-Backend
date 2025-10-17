@@ -5,7 +5,17 @@ const appointmentSchema = new mongoose.Schema({
   doctor: { type: mongoose.Schema.Types.ObjectId, ref: "Doctor", required: true },
   date: { type: Date, required: true },
   slot: { type: String, required: true },
-  status: { type: String, enum: ["Booked", "Cancelled", "Completed"], default: "Booked" }
+  status: { type: String, enum: ["Booked", "Cancelled", "Completed"], default: "Booked" },
+  paymentStatus: { 
+    type: String, 
+    enum: ["unpaid", "pending", "paid", "failed", "refunded"], 
+    default: "unpaid" 
+  },
+  paymentId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "Payment", 
+    required: false 
+  }
 }, { timestamps: true });
 
 export default mongoose.model("Appointment", appointmentSchema);

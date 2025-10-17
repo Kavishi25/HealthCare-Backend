@@ -25,8 +25,8 @@ export const validatePaymentCreation = (req, res, next) => {
   }
 
   // Currency validation (optional)
-  if (currency && !['USD', 'EUR', 'GBP', 'INR'].includes(currency)) {
-    errors.push('Currency must be one of: USD, EUR, GBP, INR');
+  if (currency && !['USD', 'EUR', 'GBP', 'INR', 'LKR'].includes(currency)) {
+    errors.push('Currency must be one of: USD, EUR, GBP, INR, LKR');
   }
 
   // Payment type specific validation

@@ -34,8 +34,8 @@ const paymentSchema = new mongoose.Schema({
   },
   currency: {
     type: String,
-    default: 'USD',
-    enum: ['USD', 'EUR', 'GBP', 'INR']
+    default: 'LKR',
+    enum: ['USD', 'EUR', 'GBP', 'INR', 'LKR']
   },
   
   // Appointment/Service information
