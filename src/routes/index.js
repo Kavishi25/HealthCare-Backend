@@ -10,11 +10,6 @@ import doctorRoutes from "./doctorRoutes.js";
 router.use("/appointments", appointmentRoutes);
 router.use("/doctors", doctorRoutes);
 
-import appointmentRoutes from "./appointmentRoutes.js";
-import doctorRoutes from "./doctorRoutes.js";
-
-router.use("/appointments", appointmentRoutes);
-router.use("/doctors", doctorRoutes);
 
 // Health check route
 router.get("/health", (req, res) => {
