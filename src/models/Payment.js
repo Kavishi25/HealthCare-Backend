@@ -34,8 +34,8 @@ const paymentSchema = new mongoose.Schema({
   },
   currency: {
     type: String,
-    default: 'USD',
-    enum: ['USD', 'EUR', 'GBP', 'INR']
+    default: 'LKR',
+    enum: ['USD', 'EUR', 'GBP', 'INR', 'LKR']
   },
   
   // Appointment/Service information
@@ -299,4 +299,5 @@ paymentSchema.statics.getPaymentsByType = async function(userId = null, limit = 
   ]);
 };
 
-export default mongoose.model('Payment', paymentSchema);
+// Check if model exists before creating it (fixes hot-reload issues)
+export default mongoose.models.Payment || mongoose.model('Payment', paymentSchema);

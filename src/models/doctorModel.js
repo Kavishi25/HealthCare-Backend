@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const doctorSchema = new mongoose.Schema({
   name: { type: String, required: true },
   specialty: { type: String, required: true },
+  chargePerSlot: { type: Number, required: true, default: 0 },
   availableSlots: [
     {
       date: { type: Date, required: true },
@@ -11,4 +12,5 @@ const doctorSchema = new mongoose.Schema({
   ]
 });
 
-export default mongoose.model("Doctor", doctorSchema);
+// Check if model exists before creating it (fixes hot-reload issues)
+export default mongoose.models.Doctor || mongoose.model("Doctor", doctorSchema);

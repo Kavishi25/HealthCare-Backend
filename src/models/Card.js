@@ -142,4 +142,5 @@ cardSchema.statics.getCardType = function(cardNumber) {
   return 'Other';
 };
 
-export default mongoose.model('Card', cardSchema);
+// Check if model exists before creating it (fixes hot-reload issues)
+export default mongoose.models.Card || mongoose.model('Card', cardSchema);
