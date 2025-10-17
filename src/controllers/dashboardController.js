@@ -1,5 +1,5 @@
 // src/controllers/dashboardController.js
-import Patient from '../models/Patient.js';
+import Patient from '../models/patientModel.js';
 
 export const getDashboardStats = async (req, res) => {
   try {

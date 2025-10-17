@@ -12,4 +12,5 @@ const doctorSchema = new mongoose.Schema({
   ]
 });
 
-export default mongoose.model("Doctor", doctorSchema);
+// Check if model exists before creating it (fixes hot-reload issues)
+export default mongoose.models.Doctor || mongoose.model("Doctor", doctorSchema);

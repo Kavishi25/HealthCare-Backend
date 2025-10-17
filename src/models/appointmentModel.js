@@ -18,4 +18,5 @@ const appointmentSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-export default mongoose.model("Appointment", appointmentSchema);
+// Check if model exists before creating it (fixes hot-reload issues)
+export default mongoose.models.Appointment || mongoose.model("Appointment", appointmentSchema);

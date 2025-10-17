@@ -3,13 +3,13 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
-// Specific API route imports (from the second file)
+// Main routes (appointments, doctors, cards, payments)
+import routes from './routes/index.js';
+
+// Specific API route imports
 import reportRoutes from './routes/reportRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 import patientRoutes from './routes/patientRoutes.js';
-
-// Note: The generic 'routes' import from the first file is omitted 
-// in favor of the more specific, explicit route imports above.
 
 const app = express();
 
@@ -24,15 +24,19 @@ app.get("/", (req, res) => {
   res.send("Healthcare API Backend is running and ready for specific routes at /api/*");
 });
 
-// --- Specific API Routes (from the second file) ---
+// --- Main API Routes ---
+// Mount main routes (appointments, doctors, cards, payments)
+app.use('/api', routes);
+
+// --- Specific API Routes ---
 // Mounting specific route modules under /api
 app.use('/api/reports', reportRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/patients', patientRoutes);
 
-// --- Health Check Route (from the second file) ---
+// --- Health Check Route ---
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Healthcare Backend is running!' });
+  res.json({ status: 'OK', message: 'Healthcare Backend is running!' });
 });
 
 export default app;
