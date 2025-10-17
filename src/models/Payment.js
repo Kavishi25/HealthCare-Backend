@@ -164,7 +164,6 @@ const paymentSchema = new mongoose.Schema({
 paymentSchema.index({ userId: 1, status: 1 });
 paymentSchema.index({ paymentType: 1, status: 1 });
 paymentSchema.index({ appointmentId: 1 });
-paymentSchema.index({ transactionId: 1 });
 paymentSchema.index({ createdAt: -1 });
 paymentSchema.index({ paidAt: -1 });
 
